@@ -20,6 +20,13 @@ async function run ()
         const serviceCollection = database.collection('service');
         const orderCollection = database.collection('order');
 
+        //READ data
+        app.get('/service', async (req, res) =>
+        {
+            const cursor = serviceCollection.find({});
+            const services = await cursor.toArray();
+            res.send(services);
+        })
     }
     finally {
         // await client.close();
