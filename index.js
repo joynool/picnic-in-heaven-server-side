@@ -20,13 +20,23 @@ async function run ()
         const serviceCollection = database.collection('service');
         const orderCollection = database.collection('order');
 
-        //READ data
+        //CREATE service data
+        app.post('/service', async (req, res) =>
+        {
+            const newService = req.body;
+            const result = await serviceCollection.insertOne(newService);
+            res.json(result);
+        });
+
+        //READ service data
         app.get('/service', async (req, res) =>
         {
             const cursor = serviceCollection.find({});
             const services = await cursor.toArray();
             res.send(services);
-        })
+        });
+
+
     }
     finally {
         // await client.close();
