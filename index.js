@@ -45,6 +45,14 @@ async function run ()
             const result = await serviceCollection.findOne(query);
             res.send(result);
         });
+
+        //CREATE order data
+        app.post('/order', async (req, res) =>
+        {
+            const newOrder = req.body;
+            const result = await serviceCollection.insertOne(newOrder);
+            res.json(result);
+        });
     }
     finally {
         // await client.close();
