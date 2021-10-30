@@ -50,7 +50,7 @@ async function run ()
         app.post('/order', async (req, res) =>
         {
             const newOrder = req.body;
-            const result = await serviceCollection.insertOne(newOrder);
+            const result = await orderCollection.insertOne(newOrder);
             res.json(result);
         });
     }
