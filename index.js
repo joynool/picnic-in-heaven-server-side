@@ -77,6 +77,15 @@ async function run ()
             const result = await orderCollection.updateOne(filter, updateDoc, options);
             res.json(result);
         })
+
+        //DELETE order data
+        app.delete('/order/:id', async (req, res) =>
+        {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await orderCollection.deleteOne(query);
+            res.json(result);
+        })
     }
     finally {
         // await client.close();
