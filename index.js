@@ -86,6 +86,15 @@ async function run ()
             const result = await orderCollection.deleteOne(query);
             res.json(result);
         })
+
+        //READ order data by email
+        app.get('/order/:email', async (req, res) =>
+        {
+            const email = req.params.email;
+            const query = { "email": email };
+            const result = await orderCollection.find(query);
+            res.send(result);
+        })
     }
     finally {
         // await client.close();
