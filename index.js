@@ -10,12 +10,14 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+//MongoDB connection state
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function run ()
 {
     try {
+        //Build mongoDB connection with database collection
         await client.connect();
         const database = client.db('picnic_in_heaven');
         const serviceCollection = database.collection('service');
@@ -76,7 +78,7 @@ async function run ()
             };
             const result = await orderCollection.updateOne(filter, updateDoc, options);
             res.json(result);
-        })
+        });
 
         //DELETE order data
         app.delete('/order/:id', async (req, res) =>
@@ -85,7 +87,7 @@ async function run ()
             const query = { _id: ObjectId(id) };
             const result = await orderCollection.deleteOne(query);
             res.json(result);
-        })
+        });
 
         //READ order data by email
         app.get('/order/:email', async (req, res) =>
@@ -95,7 +97,7 @@ async function run ()
             const cursor = orderCollection.find(query);
             const result = await cursor.toArray();
             res.send(result);
-        })
+        });
     }
     finally {
         // await client.close();
