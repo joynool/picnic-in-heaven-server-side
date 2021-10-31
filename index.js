@@ -91,8 +91,9 @@ async function run ()
         app.get('/order/:email', async (req, res) =>
         {
             const email = req.params.email;
-            const query = { "email": `${email}` };
-            const result = await orderCollection.find(query);
+            const query = { email: { $eq: email } };
+            const cursor = orderCollection.find(query);
+            const result = await cursor.toArray();
             res.send(result);
         })
     }
